@@ -4,7 +4,28 @@
 .search-container {
 }
 .bench-index {
-  float: left;
+  position: absolute;
+  display: block;
   width: 350px;
-  height: 100%;
+  max-height: 80%;
+  margin-left: 50px;
+  margin-bottom: 50px;
+  border: 2px solid lightgray;
+  border-bottom: 0px solid lightgray;
+  overflow-y: scroll;
+
+
+}
+.bench-index h3 {
+  text-align: center;
+}
+.bench-index ul:nth-child(2) {
+  border-top: 2px solid lightgray;
+}
+.bench-index ul {
+  border-bottom: 2px solid lightgray;
+}
+
+.bench-index li {
+  padding-left: 20px
 }

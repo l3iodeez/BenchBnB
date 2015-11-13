@@ -7,9 +7,9 @@ var Map = React.createClass ({
 
   },
   recolorMarkers: function () {
-  
+
     this.state.markers.forEach(function (marker) {
-      if (HighlightStore.highlighted() === marker.id) {
+      if (HighlightStore.highlighted() === marker.benchId) {
         this.colorMarker("FF0", marker);
       } else {
         this.colorMarker("FE7569", marker);
@@ -37,8 +37,7 @@ var Map = React.createClass ({
       if (!this.markerPresent(bench)) {
         var marker = new google.maps.Marker({
           map: this.state.map,
-          id: bench.id,
-          highlighted: false,
+          benchId: bench.id,
           title: bench.description,
           icon: MapConstants.pinImage("FE7569"),
           animation: google.maps.Animation.DROP,
@@ -69,13 +68,13 @@ var Map = React.createClass ({
   benchPresent: function (marker) {
     var benches = BenchStore.all();
     return benches.find(function (bench) {
-      return marker.id === bench.id;
+      return marker.benchId === bench.id;
     }.bind(this));
   },
 
   markerPresent: function (bench) {
     return this.state.markers.find(function (marker) {
-      return marker.id === bench.id;
+      return marker.benchId === bench.id;
     }.bind(this));
   },
 

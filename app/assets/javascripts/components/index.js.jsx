@@ -12,28 +12,30 @@ var Index = React.createClass({
   },
 
   _highlightMarker: function (event) {
+    debugger
     var benchId = parseInt(event.currentTarget.getAttribute('data-benchid'));
     MapActions.setHighlight(benchId);
   },
+
   _unhighlightMarker: function (event) {
-    
     var benchId = parseInt(event.currentTarget.getAttribute('data-benchid'));
-      MapActions.setHighlight(null);
-
-
+    MapActions.setHighlight(null);
   },
 
   render: function () {
     return (
-      <div className="bench-index" >
+      <div className="bench-index group" >
+        <h3>Available Benches</h3>
         {
           this.state.benches.map(function (bench) {
             return(
               <ul data-benchid={bench.id} key={bench.id} onMouseEnter={this._highlightMarker} onMouseLeave={this._unhighlightMarker}  >
-              <li>{bench.id}</li>
-                <li>{bench.description}</li>
-                <li>{bench.lat}</li>
-                <li>{bench.lng}</li>
+                <li>ID#:{bench.id}</li>
+                <li>Description: {bench.description}</li>
+                <li>Position: [{bench.lat}, {bench.lng}]</li>
+                <li className="bench-index-image">
+                  <img src={bench.image_url} ></img>
+                </li>
               </ul>
             );
           }.bind(this))
