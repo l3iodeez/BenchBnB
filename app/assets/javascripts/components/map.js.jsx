@@ -4,15 +4,16 @@ var Map = React.createClass ({
   },
   componentWillReceiveProps: function (newProps) {
 
+
+  },
+  recolorMarkers: function () {
+  
     this.state.markers.forEach(function (marker) {
-      var pinColor;
-      if (newProps.highlightedMarker === marker.id) {
+      if (HighlightStore.highlighted() === marker.id) {
         this.colorMarker("FF0", marker);
       } else {
         this.colorMarker("FE7569", marker);
       }
-
-
     }.bind(this));
 
   },
@@ -87,8 +88,9 @@ var Map = React.createClass ({
     var gMap = new google.maps.Map(map, mapOptions);
 
     this.setState({map: gMap });
-    BenchStore.addChangeListener(this._changed);
 
+    BenchStore.addChangeListener(this._changed);
+    HighlightStore.addChangeListener(this.recolorMarkers);
     gMap.addListener('idle', function (event) {
       var bounds = {
         northEast: {

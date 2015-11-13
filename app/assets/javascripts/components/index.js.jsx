@@ -13,14 +13,14 @@ var Index = React.createClass({
 
   _highlightMarker: function (event) {
     var benchId = parseInt(event.currentTarget.getAttribute('data-benchid'));
-    console.log(benchId +"highligted");
-    this.props.highlight(benchId);
+    MapActions.setHighlight(benchId);
   },
   _unhighlightMarker: function (event) {
+    
     var benchId = parseInt(event.currentTarget.getAttribute('data-benchid'));
-    console.log(benchId +"unhighligted");
+      MapActions.setHighlight(null);
 
-    this.props.unhighlight(benchId);
+
   },
 
   render: function () {
