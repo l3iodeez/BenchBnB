@@ -9,7 +9,7 @@ var Map = React.createClass ({
     var map = this.state.map;
 
     this.removeOutOfBoundsMarkers();
-
+    var newMarkers = [];
 
     benches.forEach(function (bench) {
       if (!this.markerPresent(bench)) {
@@ -20,20 +20,25 @@ var Map = React.createClass ({
           animation: google.maps.Animation.DROP,
           position: { lat: parseFloat(bench.lat), lng: parseFloat(bench.lng) }
         });
-        this.setState({ markers: this.state.markers.concat(marker) } );
+        newMarkers.push(marker);
       }
     }.bind(this));
-
+    this.setState({ markers: this.state.markers.concat(newMarkers) } );
   },
 
   removeOutOfBoundsMarkers: function () {
+
     var markers = this.state.markers;
+    var remainingMarkers= [];
     for (var i = 0; i < markers.length; i++) {
       if (!this.benchPresent(markers[i])) {
         markers[i].setMap(null);
-        markers.splice(i, 1);
+      } else {
+        remainingMarkers.push(markers[i]);
       }
+
     }
+    this.setState({markers: remainingMarkers});
   },
 
   benchPresent: function (marker) {

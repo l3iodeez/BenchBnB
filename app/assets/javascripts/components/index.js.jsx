@@ -15,6 +15,7 @@ var Index = React.createClass({
           this.state.benches.map(function (bench) {
             return(
               <ul key={bench.id}>
+              <li>{bench.id}</li>
                 <li>{bench.description}</li>
                 <li>{bench.lat}</li>
                 <li>{bench.lng}</li>
