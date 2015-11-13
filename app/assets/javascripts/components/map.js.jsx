@@ -21,9 +21,12 @@ var Map = React.createClass ({
       center: {lat: 40.648774, lng: -74.004902},
       zoom: 13
     };
-    this.setState({map: new google.maps.Map(map, mapOptions) });
+    var gMap = new google.maps.Map(map, mapOptions);
+
+    this.setState({map: gMap });
     BenchStore.addChangeListener(this._changed);
-    map.addListener('idle', function () {
+
+    gMap.addListener('idle', function () {
       ApiUtil.fetchBenches();
     });
   },
