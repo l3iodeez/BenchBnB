@@ -13,7 +13,13 @@
     removeChangeListener: function(callback){
       this.removeListener(CHANGE_EVENT, callback);
     },
+    
+    isPresent: function (benchId) {
+      var present = false;
+      _benches.forEach(function (bench) {
 
+      });
+    },
     all: function () {
       return _benches.slice(0);
     },
