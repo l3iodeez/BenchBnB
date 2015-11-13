@@ -2,6 +2,25 @@ var Map = React.createClass ({
   getInitialState: function () {
     return {markers: []};
   },
+  componentWillReceiveProps: function (newProps) {
+
+    this.state.markers.forEach(function (marker) {
+      var pinColor;
+      if (newProps.highlightedMarker === marker.id) {
+        this.colorMarker("FF0", marker);
+      } else {
+        this.colorMarker("FE7569", marker);
+      }
+
+
+    }.bind(this));
+
+  },
+
+  colorMarker: function (color, marker) {
+    var pinImage = MapConstants.pinImage(color);
+    marker.setIcon(pinImage);
+  },
 
   _changed: function () {
 
@@ -9,17 +28,22 @@ var Map = React.createClass ({
     var map = this.state.map;
 
     this.removeOutOfBoundsMarkers();
-    var newMarkers = [];
+    var newMarkers = window.newMarkers = [];
+
 
     benches.forEach(function (bench) {
+
       if (!this.markerPresent(bench)) {
         var marker = new google.maps.Marker({
           map: this.state.map,
           id: bench.id,
+          highlighted: false,
           title: bench.description,
+          icon: MapConstants.pinImage("FE7569"),
           animation: google.maps.Animation.DROP,
           position: { lat: parseFloat(bench.lat), lng: parseFloat(bench.lng) }
         });
+
         newMarkers.push(marker);
       }
     }.bind(this));
@@ -53,6 +77,7 @@ var Map = React.createClass ({
       return marker.id === bench.id;
     }.bind(this));
   },
+
   componentDidMount: function () {
     var map = React.findDOMNode(this.refs.map);
     var mapOptions = {
@@ -82,7 +107,6 @@ var Map = React.createClass ({
   render: function () {
     return (
         <div className="map" ref="map">
-
         </div>
     );
   }
