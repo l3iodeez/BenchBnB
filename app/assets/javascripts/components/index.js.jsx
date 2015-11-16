@@ -12,7 +12,6 @@ var Index = React.createClass({
   },
 
   _highlightMarker: function (event) {
-    debugger
     var benchId = parseInt(event.currentTarget.getAttribute('data-benchid'));
     MapActions.setHighlight(benchId);
   },

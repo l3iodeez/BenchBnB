@@ -7,7 +7,6 @@ var Map = React.createClass ({
 
   },
   recolorMarkers: function () {
-
     this.state.markers.forEach(function (marker) {
       if (HighlightStore.highlighted() === marker.benchId) {
         this.colorMarker("FF0", marker);
@@ -15,7 +14,6 @@ var Map = React.createClass ({
         this.colorMarker("FE7569", marker);
       }
     }.bind(this));
-
   },
 
   colorMarker: function (color, marker) {
@@ -30,8 +28,6 @@ var Map = React.createClass ({
 
     this.removeOutOfBoundsMarkers();
     var newMarkers = window.newMarkers = [];
-
-
     benches.forEach(function (bench) {
 
       if (!this.markerPresent(bench)) {
@@ -51,7 +47,6 @@ var Map = React.createClass ({
   },
 
   removeOutOfBoundsMarkers: function () {
-
     var markers = this.state.markers;
     var remainingMarkers= [];
     for (var i = 0; i < markers.length; i++) {
@@ -107,7 +102,7 @@ var Map = React.createClass ({
 
   render: function () {
     return (
-        <div className="map" ref="map">
+        <div onClick={this.props.clickMapHandler} className="map" ref="map">
         </div>
     );
   }

@@ -1,4 +1,31 @@
 $(document).on('ready', function () {
-  React.render(<Search />, document.getElementById('content')
+  var Router = ReactRouter.Router;
+  var Route =  ReactRouter.Route;
+  var IndexRoute = ReactRouter.IndexRoute;
+  var root = document.getElementById('content');
+  var App = React.createClass({
+    render: function () {
+      return(
+        <div>
+          <section className="header-nav">
+            <ul>
+              <li className="logo">BenchBnB</li>
+            </ul>
+          </section>
+          {this.props.children}
+        </div>
+      );
+    }
+
+  });
+  var router = (
+    <Router>
+      <Route path="/" component={App}>
+        <IndexRoute component={Search}/>
+        <Route path="/benches/new" component={BenchForm}>
+        </Route>
+      </Route>
+    </Router>
   );
+  React.render(router, root);
 });

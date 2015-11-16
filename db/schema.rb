@@ -11,18 +11,22 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151113214301) do
+ActiveRecord::Schema.define(version: 20151116140529) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "benches", force: :cascade do |t|
-    t.string   "description",                          null: false
-    t.decimal  "lat",         precision: 10, scale: 6, null: false
-    t.decimal  "lng",         precision: 10, scale: 6, null: false
-    t.datetime "created_at",                           null: false
-    t.datetime "updated_at",                           null: false
+    t.string   "description",                                 null: false
+    t.decimal  "lat",                precision: 10, scale: 6, null: false
+    t.decimal  "lng",                precision: 10, scale: 6, null: false
+    t.datetime "created_at",                                  null: false
+    t.datetime "updated_at",                                  null: false
     t.string   "image_url"
+    t.string   "image_file_name"
+    t.string   "image_content_type"
+    t.integer  "image_file_size"
+    t.datetime "image_updated_at"
   end
 
 end
