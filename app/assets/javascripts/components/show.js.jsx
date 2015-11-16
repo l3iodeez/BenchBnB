@@ -16,6 +16,7 @@ var Show = React.createClass({
     <div>
       Id#: {this.state.bench ? this.state.bench.id : ""} <br/>
       Description: {this.state.bench ? this.state.bench.description : ""} <br/>
+      Seats: {this.state.bench ? this.state.bench.seating : ""} <br/>
       Latitude: {this.state.bench ? this.state.bench.lat : ""} <br/>
       Longitude: {this.state.bench ? this.state.bench.lng : ""} <br/>
       <Map bench={this.state.bench ? this.state.bench : ""} draggable={false}/>

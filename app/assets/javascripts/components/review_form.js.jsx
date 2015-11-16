@@ -19,7 +19,7 @@ var ReviewForm = React.createClass({
         rating: 0
     });
     ApiUtil.createReview(review);
-    this.history.pushState(null, "/")
+    this.history.pushState(null, "/");
   },
   _updateRating: function (e) {
     this.setState({rating: parseInt(e.currentTarget.value)});
