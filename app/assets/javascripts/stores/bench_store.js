@@ -17,6 +17,12 @@
     all: function () {
       return _benches.slice(0);
     },
+    getByID: function (benchId) {
+      var foundBench = _benches.find(function (bench) {
+        return bench.id === benchId;
+      });
+      return foundBench;
+    },
     storeBench: function (recvdBench) {
       var storedBench = _benches.find(function (bench) {
         return bench.id === recvdBench.id;

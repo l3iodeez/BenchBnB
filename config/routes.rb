@@ -6,8 +6,10 @@ Rails.application.routes.draw do
   # root 'welcome#index'
   root 'static_pages#root'
   namespace :api, defaults: {format: :json} do
-    resources :benches, only: [:index, :create]
+    resources :benches, only: [:index, :create, :show]
+    resources :reviews, only: [:create, :destroy]
   end
+
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
 

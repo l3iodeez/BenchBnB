@@ -25,6 +25,10 @@ $(document).on('ready', function () {
         </IndexRoute>
         <Route path="/benches/new" component={BenchForm}>
         </Route>
+        <Route path="/benches/:id" component={Show}>
+          <Route path="reviews" component={ReviewForm}>
+          </Route>
+        </Route>
       </Route>
     </Router>
   );

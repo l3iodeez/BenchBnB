@@ -1,9 +1,12 @@
 class Bench < ActiveRecord::Base
-  has_attached_file :image
-  validates_attachment :image, content_type: { content_type: ["image/jpg", "image/jpeg", "image/png", "image/gif"] }
-
+  has_many :reviews
+  
   def self.in_bounds(bounds)
     Bench.where("lat >= #{bounds["southWest"]["lat"]} AND lng >= #{bounds["southWest"]["lng"]}")
          .where("lat <= #{bounds["northEast"]["lat"]} AND lng <= #{bounds["northEast"]["lng"]}")
+  end
+
+  def self.in_seating_range(min_seats, max_seats)
+
   end
 end

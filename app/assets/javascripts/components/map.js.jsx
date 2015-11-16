@@ -2,10 +2,7 @@ var Map = React.createClass ({
   getInitialState: function () {
     return {markers: []};
   },
-  componentWillReceiveProps: function (newProps) {
 
-
-  },
   recolorMarkers: function () {
     this.state.markers.forEach(function (marker) {
       if (HighlightStore.highlighted() === marker.benchId) {
@@ -21,15 +18,16 @@ var Map = React.createClass ({
     marker.setIcon(pinImage);
   },
 
-  _changed: function () {
-
-    var benches = BenchStore.all();
+  _updateMarkers: function () {
+    var benches;
+    if (this.props.bench) {
+      benches = [BenchStore.getByID(this.props.bench.id)];
+    } else {
+      benches = BenchStore.all();
+    }
     var map = this.state.map;
-
-    this.removeOutOfBoundsMarkers();
-    var newMarkers = window.newMarkers = [];
+    var newMarkers = [];
     benches.forEach(function (bench) {
-
       if (!this.markerPresent(bench)) {
         var marker = new google.maps.Marker({
           map: this.state.map,
@@ -39,11 +37,20 @@ var Map = React.createClass ({
           animation: google.maps.Animation.DROP,
           position: { lat: parseFloat(bench.lat), lng: parseFloat(bench.lng) }
         });
-
+        if (this.props.clickMarkerHandler) {
+          marker.addListener('click', function (e) {
+            this.props.clickMarkerHandler(e, marker);
+          }.bind(this));
+        }
         newMarkers.push(marker);
       }
     }.bind(this));
     this.setState({ markers: this.state.markers.concat(newMarkers) } );
+  },
+
+  _changed: function () {
+    this.removeOutOfBoundsMarkers();
+    this._updateMarkers();
   },
 
   removeOutOfBoundsMarkers: function () {
@@ -52,6 +59,7 @@ var Map = React.createClass ({
     for (var i = 0; i < markers.length; i++) {
       if (!this.benchPresent(markers[i])) {
         markers[i].setMap(null);
+        markers[i].unbindAll('click');
       } else {
         remainingMarkers.push(markers[i]);
       }
@@ -79,17 +87,27 @@ var Map = React.createClass ({
       center: {lat: 40.648774, lng: -74.004902},
       zoom: 13
     };
-    var gMap = new google.maps.Map(map, mapOptions);
+    if (!this.props.draggable) {
+      mapOptions.draggable = this.props.draggable;
+      mapOptions.maxZoom = 13;
+      mapOptions.minZoom = 13;
+    }
 
-    this.setState({map: gMap });
+    var gMap = new google.maps.Map(map, mapOptions);
+    if (this.props.bench) {
+      ApiUtil.fetchBenches(this.props.bench.id);
+    }
+    this.setState({map: gMap }, this._updateMarkers);
 
     BenchStore.addChangeListener(this._changed);
     HighlightStore.addChangeListener(this.recolorMarkers);
 
-    gMap.addListener('click', function (evt) {
-      var coords = {lat: evt.latLng.lat(), lng: evt.latLng.lng() };
-      this.props.clickMapHandler(coords);
-    }.bind(this));
+    if (this.props.clickMapHandler) {
+      gMap.addListener('click', function (evt) {
+        var coords = {lat: evt.latLng.lat(), lng: evt.latLng.lng() };
+        this.props.clickMapHandler(coords);
+      }.bind(this));
+    }
 
     gMap.addListener('idle', function (event) {
       var bounds = {
@@ -105,10 +123,13 @@ var Map = React.createClass ({
       FilterActions.addFilter({bounds : bounds});
     });
   },
+  
   componentWillUnmount: function () {
     var gMap = this.state.map;
     gMap.unbindAll('click');
     gMap.unbindAll('idle');
+    BenchStore.removeChangeListener(this._changed);
+    HighlightStore.removeChangeListener(this.recolorMarkers);
   },
 
   render: function () {
