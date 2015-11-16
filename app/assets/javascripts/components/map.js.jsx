@@ -102,7 +102,7 @@ var Map = React.createClass ({
           lng: this.getBounds().getSouthWest().lng()
         }
       };
-      ApiUtil.fetchBenches(bounds);
+      FilterActions.addFilter({bounds : bounds});
     });
   },
   componentWillUnmount: function () {

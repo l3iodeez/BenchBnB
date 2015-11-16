@@ -4,6 +4,7 @@ var BenchForm = React.createClass({
 
     return ({
       description: "",
+      seating: "",
       lat: this.props.location.query.lat,
       lng: this.props.location.query.lng
     });
@@ -33,6 +34,9 @@ var BenchForm = React.createClass({
         <br></br>
         <label>Longitude
           <input type="text" name="lng" valueLink={this.linkState("lng")}/>
+        </label>
+        <label>Seating
+          <input type="text" name="seating" valueLink={this.linkState("seating")}/>
         </label>
         <br></br>
         <input type="submit" />

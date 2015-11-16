@@ -31,6 +31,7 @@ var Index = React.createClass({
               <ul data-benchid={bench.id} key={bench.id} onMouseEnter={this._highlightMarker} onMouseLeave={this._unhighlightMarker}  >
                 <li>ID#:{bench.id}</li>
                 <li>Description: {bench.description}</li>
+                <li>Seats: {bench.seating}</li>
                 <li>Position: [{bench.lat}, {bench.lng}]</li>
                 <li className="bench-index-image">
                   <img src={bench.image_url} ></img>

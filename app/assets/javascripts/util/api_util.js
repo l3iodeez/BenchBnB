@@ -13,13 +13,14 @@
         }
       });
     },
-    fetchBenches: function (bounds) {
+    fetchBenches: function () {
+      console.log(FilterStore.filterParams());
       $.ajax({
         url: '/api/benches',
         method: 'GET',
         dataType: 'json',
         contentType: 'application/json',
-        data: {bounds: bounds},
+        data: FilterStore.filterParams(),
         success: function (data) {
           ApiActions.receiveAll(data);
         }
