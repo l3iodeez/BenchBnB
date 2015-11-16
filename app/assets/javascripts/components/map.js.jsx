@@ -85,6 +85,12 @@ var Map = React.createClass ({
 
     BenchStore.addChangeListener(this._changed);
     HighlightStore.addChangeListener(this.recolorMarkers);
+
+    gMap.addListener('click', function (evt) {
+      var coords = {lat: evt.latLng.lat(), lng: evt.latLng.lng() };
+      this.props.clickMapHandler(coords);
+    }.bind(this));
+
     gMap.addListener('idle', function (event) {
       var bounds = {
         northEast: {
@@ -99,10 +105,15 @@ var Map = React.createClass ({
       ApiUtil.fetchBenches(bounds);
     });
   },
+  componentWillUnmount: function () {
+    var gMap = this.state.map;
+    gMap.unbindAll('click');
+    gMap.unbindAll('idle');
+  },
 
   render: function () {
     return (
-        <div onClick={this.props.clickMapHandler} className="map" ref="map">
+        <div className="map" ref="map">
         </div>
     );
   }

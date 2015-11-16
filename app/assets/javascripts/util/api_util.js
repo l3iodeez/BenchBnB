@@ -2,7 +2,6 @@
   'use strict';
   var ApiUtil = root.ApiUtil = {
     createBench: function (bench) {
-      debugger
       $.ajax({
         url: '/api/benches',
         method: 'POST',
@@ -10,8 +9,7 @@
         contentType: 'application/json',
         data: JSON.stringify({bench: bench}),
         success: function (data) {
-          debugger
-          ApiActions.receiveAll(data);
+          ApiActions.receiveSingle(data);
         }
       });
     },

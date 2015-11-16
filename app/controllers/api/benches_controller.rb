@@ -9,7 +9,7 @@ class Api::BenchesController < ApplicationController
     @bench = Bench.new(bench_params)
 
     if @bench.save!
-      render :index
+      render :show
     else
       render json: @bench.errors.full_messages, status: 422
     end

@@ -21,7 +21,8 @@ $(document).on('ready', function () {
   var router = (
     <Router>
       <Route path="/" component={App}>
-        <IndexRoute component={Search}/>
+        <IndexRoute component={Search}>
+        </IndexRoute>
         <Route path="/benches/new" component={BenchForm}>
         </Route>
       </Route>
